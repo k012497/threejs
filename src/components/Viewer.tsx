@@ -25,11 +25,11 @@ export function Viewer () {
       element.current.appendChild(renderer.domElement);
 
       const geometry = new BoxGeometry(1, 1, 1);
-      const material = new MeshBasicMaterial({ color: 0x00ff00 });
+      const material = new MeshBasicMaterial({ color: 0xffff00 });
       const cube = new Mesh(geometry, material);
       scene.add(cube);
   
-      camera.position.z = 5;
+      camera.position.z = 5; // 카메라도 처음에 (0,0,0)에 추가되므로 카메라와 박스가 겹친 상태, 이동 필요 !
 
       const animate = () => {
         renderer.render(scene, camera);
