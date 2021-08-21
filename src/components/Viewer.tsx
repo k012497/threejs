@@ -1,11 +1,13 @@
 import React, { useRef, useEffect } from 'react';
 import {
-  Scene, 
-  PerspectiveCamera, 
-  WebGLRenderer, 
   BoxGeometry, 
+  Mesh,
   MeshBasicMaterial, 
-  Mesh
+  PerspectiveCamera, 
+  Scene, 
+  TextureLoader,
+  WebGLCubeRenderTarget,
+  WebGLRenderer, 
 } from 'three';
 
 export function Viewer () {
@@ -38,7 +40,20 @@ export function Viewer () {
         requestAnimationFrame(animate);
       }
 
+      const setBackground = (scene: Scene, renderer: WebGLRenderer, filepath: string) => {
+        const loader = new TextureLoader();
+        const texture = loader.load(
+            filepath,
+            () => {
+                const rt = new WebGLCubeRenderTarget(texture.image.height);
+                rt.fromEquirectangularTexture(renderer, texture);
+                scene.background = rt.texture;
+            }
+        );
+      }
+
       animate();
+      setBackground(scene, renderer, '/background.jpeg');
     }
 
   }, [])
