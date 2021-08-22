@@ -1,64 +1,14 @@
 import React, { useRef, useEffect } from 'react';
-import {
-  BoxGeometry, 
-  Mesh,
-  MeshBasicMaterial, 
-  PerspectiveCamera, 
-  Scene, 
-  TextureLoader,
-  WebGLCubeRenderTarget,
-  WebGLRenderer, 
-} from 'three';
+import { load } from '../three/three';
 
 export function Viewer () {
-  const element = useRef<HTMLDivElement>(null);
+  const canvas = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+    load(canvas.current as HTMLElement);
+  }, []);
 
-    const scene = new Scene();
-    const camera = new PerspectiveCamera(75, width / height, 1, 1000);
-
-    const renderer = new WebGLRenderer();
-    renderer.setSize(width, height);
-
-    if(element.current) {
-      element.current.appendChild(renderer.domElement);
-
-      const geometry = new BoxGeometry(1, 1, 1);
-      const material = new MeshBasicMaterial({ color: 0xffff00 });
-      const cube = new Mesh(geometry, material);
-      scene.add(cube);
-  
-      camera.position.z = 5; // 카메라도 처음에 (0,0,0)에 추가되므로 카메라와 박스가 겹친 상태, 이동 필요 !
-
-      const animate = () => {
-        renderer.render(scene, camera);
-        cube.rotation.x += 0.01;
-        cube.rotation.y += 0.01;
-        requestAnimationFrame(animate);
-      }
-
-      const setBackground = (scene: Scene, renderer: WebGLRenderer, filepath: string) => {
-        const loader = new TextureLoader();
-        const texture = loader.load(
-            filepath,
-            () => {
-                const rt = new WebGLCubeRenderTarget(texture.image.height);
-                rt.fromEquirectangularTexture(renderer, texture);
-                scene.background = rt.texture;
-            }
-        );
-      }
-
-      animate();
-      setBackground(scene, renderer, '/background.jpeg');
-    }
-
-  }, [])
-
-  return <div ref={element} />
+  return <canvas ref={canvas} width={window.innerWidth} height={window.innerHeight}/>
 }
 
 export default Viewer;
