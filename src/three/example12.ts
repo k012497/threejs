@@ -46,8 +46,6 @@ export function initThreejs(canvas: HTMLCanvasElement | null) {
   gui.add(camera.position, 'y', -5, 5, 0.1).name('카메라 Y');
   gui.add(camera.position, 'z', 2, 10, 0.1).name('카메라 Z');
 
-  camera.lookAt(mesh.position);
-
   const clock = new THREE.Clock();
 
   // Rotation
