@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import dat from 'dat.gui';
 
 /**
- * 그룹 만드기(Scene graph)
+ * 그룹 만들기(Scene graph)
  * @param canvas
  * @returns
  */
