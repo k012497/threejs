@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls';
 import { FlyControls } from 'three/examples/jsm/controls/FlyControls';
+import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls';
 
 /**
  * 카메라 컨트롤 - OrbitControls, TrackballControls
@@ -52,10 +53,18 @@ export function initThreejs(canvas: HTMLCanvasElement | null) {
 
   // 3. FlyControls
   // 키보드 wasd로 방향키처럼 조작, 좌클릭 앞으로 우클릭 뒤로, r위로 f아래로, q시계 e 반시계방향 회전 가능
-  const controls = new FlyControls(camera, renderer.domElement);
-  controls.rollSpeed = 0.1; // 마우스 따라가는 속도
+  // const controls = new FlyControls(camera, renderer.domElement);
+  // controls.rollSpeed = 0.1; // 마우스 따라가는 속도
   // controls.movementSpeed = 3; // 앞뒤좌우 움직임 속도
   // controls.dragToLook = true; // 마우스에 반응하지 않고 드래그에만 반응
+
+  // 4. FirstPersonControls
+  // FlyControls의 기능을 수정한 대체 버전
+  const controls = new FirstPersonControls(camera, renderer.domElement);
+  // controls.movementSpeed = 10;
+  // controls.activeLook = false;
+  controls.lookSpeed = 0.1; // FlyControls의 rollSpeed
+  controls.autoForward = true;
 
   // Mesh
   const geometry = new THREE.BoxGeometry(1, 1, 1);
