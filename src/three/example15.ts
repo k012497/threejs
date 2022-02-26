@@ -1,8 +1,9 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls';
 
 /**
- * 카메라 컨트롤 - OrbitControls
+ * 카메라 컨트롤 - OrbitControls, TrackballControls
  * @param canvas
  * @returns
  */
@@ -28,8 +29,9 @@ export function initThreejs(canvas: HTMLCanvasElement | null) {
   scene.add(directionalLight);
 
   // Controls
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true; // 움직임을 부드럽게
+  // 1. OrbitControls
+  // const controls = new OrbitControls(camera, renderer.domElement);
+  // controls.enableDamping = true; // 움직임을 부드럽게
   // controls.enableZoom = false;
   // controls.maxDistance = 10;
   // controls.minDistance = 3;
@@ -39,6 +41,13 @@ export function initThreejs(canvas: HTMLCanvasElement | null) {
   // controls.target.set(2, 2, 2); // 회전 중심점 좌표
   // controls.autoRotate = true;
   // controls.autoRotateSpeed = 50;
+
+  // 2. TrackballControls
+  // 360도 회전 가능, 기본으로 enableDamping 설정됨, update 안 해주면 안 됨
+  const controls = new TrackballControls(camera, renderer.domElement);
+  controls.maxDistance = 20;
+  controls.minDistance = 5;
+  // controls.target.set(3, 3, 3);
 
   // Mesh
   const geometry = new THREE.BoxGeometry(1, 1, 1);
