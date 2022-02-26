@@ -3,9 +3,10 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls';
 import { FlyControls } from 'three/examples/jsm/controls/FlyControls';
 import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls';
+import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls';
 
 /**
- * 카메라 컨트롤 - OrbitControls, TrackballControls
+ * 카메라 컨트롤 - OrbitControls, TrackballControls, FlyControls, FirstPersonControls, PointerLockControls
  * @param canvas
  * @returns
  */
@@ -60,11 +61,24 @@ export function initThreejs(canvas: HTMLCanvasElement | null) {
 
   // 4. FirstPersonControls
   // FlyControls의 기능을 수정한 대체 버전
-  const controls = new FirstPersonControls(camera, renderer.domElement);
+  // const controls = new FirstPersonControls(camera, renderer.domElement);
   // controls.movementSpeed = 10;
   // controls.activeLook = false;
-  controls.lookSpeed = 0.1; // FlyControls의 rollSpeed
-  controls.autoForward = true;
+  // controls.lookSpeed = 0.1; // FlyControls의 rollSpeed
+  // controls.autoForward = true;
+
+  // 5. PointerLockControls
+  // Pointer Lock API 사용 (https://developer.mozilla.org/en-US/docs/Web/API/Pointer_Lock_API)
+  const controls = new PointerLockControls(camera, renderer.domElement);
+  controls.domElement.addEventListener('click', () => {
+    controls.lock(); // lock을 실행해야 동작함
+  });
+  controls.addEventListener('lock', () => {
+    console.log('lock!');
+  });
+  controls.addEventListener('unlock', () => {
+    console.log('unlock!');
+  });
 
   // Mesh
   const geometry = new THREE.BoxGeometry(1, 1, 1);
@@ -90,7 +104,9 @@ export function initThreejs(canvas: HTMLCanvasElement | null) {
 
   function draw() {
     const delta = clock.getDelta();
-    controls.update(delta); // FlyControls는 delta 인자 필요 - 마우스 위치를 따라 회전
+    // FlyControls, FirstPersonControls는 delta 인자 필요 - 마우스 위치를 따라 회전
+    // PointerLockControls는 사용자 동작에 따른 lock 호출로 실행되므로 update가 없다.
+    // controls.update();
 
     renderer.render(scene, camera);
     renderer.setAnimationLoop(draw);
