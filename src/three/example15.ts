@@ -4,9 +4,12 @@ import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls
 import { FlyControls } from 'three/examples/jsm/controls/FlyControls';
 import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls';
 import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls';
+import { DragControls } from 'three/examples/jsm/controls/DragControls';
 
 /**
- * 카메라 컨트롤 - OrbitControls, TrackballControls, FlyControls, FirstPersonControls, PointerLockControls
+ * 카메라 컨트롤
+ * OrbitControls, TrackballControls, FlyControls,
+ * FirstPersonControls, PointerLockControls, DragControls
  * @param canvas
  * @returns
  */
@@ -69,24 +72,25 @@ export function initThreejs(canvas: HTMLCanvasElement | null) {
 
   // 5. PointerLockControls
   // Pointer Lock API 사용 (https://developer.mozilla.org/en-US/docs/Web/API/Pointer_Lock_API)
-  const controls = new PointerLockControls(camera, renderer.domElement);
-  controls.domElement.addEventListener('click', () => {
-    controls.lock(); // lock을 실행해야 동작함
-  });
-  controls.addEventListener('lock', () => {
-    console.log('lock!');
-  });
-  controls.addEventListener('unlock', () => {
-    console.log('unlock!');
-  });
+  // const controls = new PointerLockControls(camera, renderer.domElement);
+  // controls.domElement.addEventListener('click', () => {
+  //   controls.lock(); // lock을 실행해야 동작함
+  // });
+  // controls.addEventListener('lock', () => {
+  //   console.log('lock!');
+  // });
+  // controls.addEventListener('unlock', () => {
+  //   console.log('unlock!');
+  // });
 
-  // Mesh
+  // 6. DragControls
+  // 물체를 드래그해서 옮길 수 있음. 어떤 물체를 드래그 할 건지 정해줘야 함
   const geometry = new THREE.BoxGeometry(1, 1, 1);
+  const meshes = [];
   let mesh;
   let material;
   for (let i = 0; i < 20; i++) {
     material = new THREE.MeshStandardMaterial({
-      // 색상 랜덤. 배경 검은색이니까 50 ~ 255 사이
       color: `rgb(
 				${50 + Math.floor(Math.random() * 205)},
 				${50 + Math.floor(Math.random() * 205)},
@@ -94,16 +98,25 @@ export function initThreejs(canvas: HTMLCanvasElement | null) {
 			)`,
     });
     mesh = new THREE.Mesh(geometry, material);
-    mesh.position.x = (Math.random() - 0.5) * 5; // -2.5 ~ 2.5 랜덤
+    mesh.position.x = (Math.random() - 0.5) * 5;
     mesh.position.y = (Math.random() - 0.5) * 5;
     mesh.position.z = (Math.random() - 0.5) * 5;
+    mesh.name = `box-${i}`;
     scene.add(mesh);
+
+    meshes.push(mesh);
   }
+
+  const controls = new DragControls(meshes, camera, renderer.domElement);
+  controls.addEventListener('dragstart', (e) => {
+    console.log(e.object.name);
+  });
 
   const clock = new THREE.Clock();
 
   function draw() {
     const delta = clock.getDelta();
+
     // FlyControls, FirstPersonControls는 delta 인자 필요 - 마우스 위치를 따라 회전
     // PointerLockControls는 사용자 동작에 따른 lock 호출로 실행되므로 update가 없다.
     // controls.update();
