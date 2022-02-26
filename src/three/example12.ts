@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import dat from 'dat.gui';
 
 /**
- * 위치 이동(position), 크기 조정(scale)
+ * 위치 이동(position), 크기 조정(scale), 회전(rotation)
  * @param canvas
  * @returns
  */
@@ -49,6 +49,12 @@ export function initThreejs(canvas: HTMLCanvasElement | null) {
   camera.lookAt(mesh.position);
 
   const clock = new THREE.Clock();
+
+  // Rotation
+  // mesh.rotation.x = Math.PI / 2;
+  mesh.rotation.reorder('YXZ'); // 회전축을 독립시켜서 바꿔줌
+  mesh.rotation.z = THREE.MathUtils.degToRad(45);
+  mesh.rotation.x = THREE.MathUtils.degToRad(20);
 
   function draw() {
     const time = clock.getElapsedTime();
