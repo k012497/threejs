@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import dat from 'dat.gui';
 
 /**
- * 위치 이동(position)
+ * 위치 이동(position), 크기 조정(scale)
  * @param canvas
  * @returns
  */
@@ -52,11 +52,17 @@ export function initThreejs(canvas: HTMLCanvasElement | null) {
 
   function draw() {
     const time = clock.getElapsedTime();
-    mesh.rotation.y = time;
-    mesh.position.set(-1, 2, -1); // x, y, z 포지션 한꺼번에 세팅하기
+
+    // Position
+    // mesh.rotation.y = time;
+    // mesh.position.set(-1, 2, -1); // x, y, z 포지션 한꺼번에 세팅하기
     // console.log(mesh.position.length()); // 원점으로부터의 벡터 길이
     // console.log(mesh.position.distanceTo(new THREE.Vector3(1, 2, 0))); // vactor3 = 3차원 공간에서의 위치
     // console.log(mesh.position.distanceTo(camera.position)); // Vector3 객체 아니어도 가능
+
+    // Scale
+    // mesh.scale.set(1, 1, 1); // 기본값은 1
+    mesh.scale.x = 2;
 
     renderer.render(scene, camera);
     renderer.setAnimationLoop(draw);
