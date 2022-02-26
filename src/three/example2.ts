@@ -1,9 +1,10 @@
 import * as THREE from 'three';
 
+// 브라우저 창 사이즈 조절 대응
 export function initThreejs(canvas: HTMLCanvasElement | null) {
   if (!canvas) return;
 
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true }); //antialias : 선을 부드럽게 하는 작업
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
 
   // devicePixelRatio은 장치의 물리적 픽셀과 CSS 픽셀의 비율 (CSS 픽셀의 크기 / 물리적 픽셀의 크기)
