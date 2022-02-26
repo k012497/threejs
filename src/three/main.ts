@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-export function init(canvas: HTMLCanvasElement | null) {
+export function initThreejs(canvas: HTMLCanvasElement | null) {
   if (!canvas) return;
   /**
    * Renderer 생성
