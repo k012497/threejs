@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-// 애니메이션 기본
+// 애니메이션 기본 + 성능 보정
 export function initThreejs(canvas: HTMLCanvasElement | null) {
   if (!canvas) return;
 
@@ -29,17 +29,20 @@ export function initThreejs(canvas: HTMLCanvasElement | null) {
   const mesh = new THREE.Mesh(geometry, material);
   scene.add(mesh);
 
-  // 그리기
   const clock = new THREE.Clock();
 
+  // 그리기
   function draw() {
-    const time = clock.getElapsedTime(); // clock이 시작되었을 때부터 경과한 시간(초)
+    // clock이 시작되었을 때부터 경과한 시간(초)를 반환
+    // 기기마다 성능이 다를 수 있으므로 1초동안 실행되는 횟수는 차이나지만,
+    // 1초라는 시간이 지났을 때 반환 값이 1인 것은 동일하므로 어떤 기기에서도 같은 속도를 줄 수 있다.
+    const time = clock.getElapsedTime();
 
     // 각도는 Radian을 사용한다.(360° = 2π)
+    mesh.position.y += 0.01;
     // mesh.rotation.y += 0.1;
-    // mesh.position.y += 0.01;
-    mesh.rotation.y = 2 * time;
-    mesh.rotation.y += THREE.MathUtils.degToRad(1); // THREE.MathUtils.degToRad를 사용하면 편리
+    // mesh.rotation.y += THREE.MathUtils.degToRad(1); // THREE.MathUtils.degToRad를 사용하면 편리, 초당 60회 호출하면 1초에 60도
+    mesh.rotation.y = 2 * time; // 변화를 줄 값에 시간을 이용
     if (mesh.position.y > 3) {
       mesh.position.y = 0;
     }
