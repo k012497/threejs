@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useEffect, createRef } from 'react';
 
-import '../three/main';
+import { init } from '../three/main';
 
 export function Viewer() {
-  return <canvas id="my-canvas" />;
+  const canvasRef = createRef<HTMLCanvasElement>();
+
+  useEffect(() => {
+    init(canvasRef.current);
+  });
+
+  return <canvas id="my-canvas" ref={canvasRef} />;
 }
 
 export default Viewer;
