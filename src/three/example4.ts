@@ -43,9 +43,8 @@ export function initThreejs(canvas: HTMLCanvasElement | null) {
   renderer.render(scene, camera);
 
   function resizeCanvas() {
-    // 카메라
     camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix(); // 카메라 투영에 관련된 값에 변화가 있을 경우 실행
+    camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.render(scene, camera);
   }
