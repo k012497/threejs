@@ -6,13 +6,19 @@
 // import { initThreejs } from './basic/example6';
 // import { initThreejs } from './basic/example7';
 // import { initThreejs } from './basic/example8';
-// import { initThreejs } from './tool/example9';
-// import { initThreejs } from './tool/example10';
-// import { initThreejs } from './tool/example11';
-// import { initThreejs } from './transform/example12';
-// import { initThreejs } from './transform/example13';
-// import { initThreejs } from './geometry/example14';
-// import { initThreejs } from './camera-control/example15';
-import { initThreejs } from './camera-control/example16';
+
+// import { initThreejs } from './tool/example1';
+// import { initThreejs } from './tool/example2';
+// import { initThreejs } from './tool/example3';
+
+// import { initThreejs } from './transform/example1';
+// import { initThreejs } from './transform/example2';
+
+// import { initThreejs } from './geometry/example1';
+
+// import { initThreejs } from './camera-control/example1';
+// import { initThreejs } from './camera-control/example2';
+
+import { initThreejs } from './material/example1';
 
 export { initThreejs };
