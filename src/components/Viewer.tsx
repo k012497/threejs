@@ -1,6 +1,6 @@
 import React, { useEffect, createRef } from 'react';
 
-import { initThreejs } from '../three/main';
+import { initThreejs } from '../three-example';
 
 export function Viewer() {
   const canvasRef = createRef<HTMLCanvasElement>();
