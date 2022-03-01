@@ -86,6 +86,8 @@ export function initThreejs(canvas: HTMLCanvasElement | null) {
     diceMesh.position.copy(boxBody.position as any); // 위치 똑같이 적용
     diceMesh.quaternion.copy(boxBody.quaternion as any); // 회전 똑같이 적용
 
+    camera.lookAt(diceMesh.position);
+
     renderer.render(scene, camera);
     renderer.setAnimationLoop(draw);
   }
