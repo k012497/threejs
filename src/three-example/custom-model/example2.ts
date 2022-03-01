@@ -21,7 +21,7 @@ export function initThreejs(canvas: HTMLCanvasElement | null) {
 
   // Camera
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.set(5, 5, 10);
+  camera.position.set(5, 5, 15);
   scene.add(camera);
 
   // Light
@@ -68,7 +68,7 @@ export function initThreejs(canvas: HTMLCanvasElement | null) {
   });
 
   const floorMesh = new THREE.Mesh(
-    new THREE.PlaneGeometry(10, 10),
+    new THREE.PlaneGeometry(30, 30),
     new THREE.MeshStandardMaterial({ color: 'green' }),
   );
   floorMesh.rotateX(-Math.PI / 2);
