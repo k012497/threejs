@@ -41,6 +41,7 @@
 // import { initThreejs } from './light/example6';
 // import { initThreejs } from './light/example7';
 
-import { initThreejs } from './custom-model/example1';
+// import { initThreejs } from './custom-model/example1';
+import { initThreejs } from './custom-model/example2';
 
 export { initThreejs };
